@@ -1,0 +1,130 @@
+<div class="container mt-3 p-4 rounded shadow-sm bg-light">
+  <h3 class="text-primary mb-4">Ürün Oluştur</h3>
+  <form #form="ngForm" (ngSubmit)="saveProduct(form)">
+    <!-- Hata Mesajı -->
+    <div class="alert alert-danger" *ngIf="error">
+      {{ error }}
+    </div>
+
+    <!-- Ürün Adı -->
+    <div class="mb-3">
+      <label for="name" class="form-label fw-bold">Ürün Adı</label>
+      <input
+        required
+        minlength="5"
+        [(ngModel)]="model.name"
+        #name="ngModel"
+        type="text"
+        name="name"
+        id="name"
+        class="form-control"
+        placeholder="Ürün adını giriniz"
+      />
+      <div class="text-danger mt-1" *ngIf="name.invalid && name.touched">
+        Ürün ismi en az 5 karakter olmalıdır.
+      </div>
+    </div>
+
+    <!-- Ürün Fiyatı -->
+    <div class="mb-3">
+      <label for="price" class="form-label fw-bold">Ürün Fiyatı</label>
+      <input
+        [(ngModel)]="model.price"
+        type="number"
+        required
+        min="0"
+        max="100000"
+        name="price"
+        #price="ngModel"
+        id="price"
+        class="form-control"
+        placeholder="Ürün fiyatını giriniz"
+      />
+      <div class="text-danger mt-1" *ngIf="price.invalid && price.touched">
+        Ürün fiyatı için geçerli bir değer giriniz.
+      </div>
+    </div>
+
+    <!-- Ürün Fotoğrafı -->
+    <div class="mb-3">
+      <label for="imageUrl" class="form-label fw-bold">Ürün Fotoğrafı</label>
+      <input
+        [(ngModel)]="model.imageUrl"
+        type="text"
+        name="imageUrl"
+        id="imageUrl"
+        class="form-control"
+        placeholder="Fotoğraf URL'sini giriniz"
+      />
+    </div>
+
+    <!-- Ürün Açıklaması -->
+    <div class="mb-3">
+      <label for="description" class="form-label fw-bold">Ürün Açıklaması</label>
+      <ckeditor
+        [(ngModel)]="model.description"
+        *ngIf="model.description !== undefined && model.description !== null"
+        name="description"
+        id="description"
+        [editor]="Editor"
+      ></ckeditor>
+    </div>
+
+    <!-- Aktiflik Durumu -->
+    <div class="form-check mb-3">
+      <input
+        [(ngModel)]="model.isActive"
+        class="form-check-input"
+        type="checkbox"
+        name="isActive"
+        id="isActive"
+      />
+      <label class="form-check-label fw-bold" for="isActive"> Aktif </label>
+    </div>
+
+    <!-- Ürün Kategorisi -->
+    <div class="mb-3">
+      <label for="categoryId" class="form-label fw-bold">Kategori</label>
+      <div class="d-flex">
+        <select
+          [(ngModel)]="model.categoryId"
+          name="categoryId"
+          id="categoryId"
+          class="form-select me-2"
+          required
+        >
+          <option value="" disabled selected>Kategori Seçiniz</option>
+          <option *ngFor="let category of categories" [value]="category.id">
+            {{ category.name }}
+          </option>
+        </select>
+        <button routerLink="/categories/create" type="button" class="btn btn-outline-primary" [disabled]="!model.categoryId">Ekle</button>
+      </div>
+    </div>
+
+    <!-- Ürün Markası -->
+    <div class="mb-3">
+      <label for="brandId" class="form-label fw-bold">Marka</label>
+      <div class="d-flex">
+        <select
+          [(ngModel)]="model.brandId"
+          name="brandId"
+          id="brandId"
+          class="form-select me-2"
+          required
+        >
+          <option value="" disabled selected>Marka Seçiniz</option>
+          <option *ngFor="let brand of brands" [value]="brand.id">
+            {{ brand.name }}
+          </option>
+        </select>
+        <button routerLink="/brands/create" type="button" class="btn btn-outline-primary" [disabled]="!model.brandId">Ekle</button>
+      </div>
+    </div>
+
+    <!-- Kayıt Butonu -->
+    <button type="submit" class="btn btn-primary w-100 mt-4" [disabled]="form.invalid">
+      Ürünü Kaydet
+    </button>
+  </form>
+</div>

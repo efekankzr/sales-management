@@ -1,0 +1,25 @@
+<h3 class="text-center text-primary mb-4 mt-4">Marka Oluştur</h3>
+
+<div class="container shadow p-4 rounded" style="max-width: 400px;">
+  <form>
+    <div class="mb-3">
+      <label for="name" class="form-label">Marka İsmi</label>
+      <input
+        #name
+        type="text"
+        name="name"
+        id="name"
+        class="form-control"
+        placeholder="Marka ismini giriniz"
+      />
+    </div>
+
+    <button
+      type="button"
+      class="btn btn-primary w-100"
+      (click)="saveBrand(name)"
+    >
+      Markayı Kaydet
+    </button>
+  </form>
+</div>
